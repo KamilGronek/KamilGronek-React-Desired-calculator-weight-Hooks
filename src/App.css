@@ -1,0 +1,67 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  box-sizing: border-box;
+  background-color: grey;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 1rem;
+  padding-left: 0.5rem;
+  font-size: 20px;
+}
+
+.calculator_content {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+}
+
+.progress_session {
+  display: flex;
+  flex-direction: column;
+}
+
+.progress_section_data {
+  display: flex;
+  align-items: center;
+}
+
+.progress_bar_input {
+  margin: 15px 0;
+  font-family: inherit;
+  font-size: inherit;
+  flex: 1;
+}
+
+.progress_bar_result {
+  margin-left: 10px;
+}
+
+.button {
+  cursor: pointer;
+  background-color: transparent;
+  color: darkblue;
+  border: 3px solid darkblue;
+  padding: 10px 20px;
+  font-size: 24px;
+  background-color: #aaaaaa;
+}
+
+.results {
+  margin-top: 10px;
+}
