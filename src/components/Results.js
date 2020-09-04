@@ -1,35 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthenticationContext from "../context/AuthenticationContext";
 
 const Results = ({
-  looseWeight,
-  gainWeight,
   initialWeight,
   desiredWeight,
   height,
-  currentBMI,
-  desiredBMI,
   currentDate,
   endDate,
-  numbersOfDays,
   getCurrentBmiText,
   getDesiredBmiText,
-  isClickedCountButton,
 }) => {
   let cache = "";
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     result: "0",
-  //     emptyTitles: false,
-  //     empty: "",
-  //     errors: {
-  //       description: false,
-  //       value: false,
-  //     },
-  //   };
-  // }
 
-  const [result, setResult] = useState("0");
+  const [result] = useState("0");
 
   const messages = {
     EmptyDescAndValue: "Incorrectly set values",
@@ -60,23 +43,14 @@ const Results = ({
     );
   };
 
-  // render() {
-  // const {
-  //   looseWeight,
-  //   gainWeight,
-  //   initialWeight,
-  //   desiredWeight,
-  //   currentBMI,
-  //   desiredBMI,
-  //   numbersOfDays,
-  //   getCurrentBmiText,
-  //   getDesiredBmiText,
-  //   isClickedCountButton,
-  // } = this.props;
-
-  // const { result, emptyTitles } = this.state;
-
-  console.log(looseWeight);
+  const {
+    looseWeight,
+    gainWeight,
+    currentBMI,
+    desiredBMI,
+    numbersOfDays,
+    isClickedCountButton,
+  } = useContext(AuthenticationContext);
 
   const loosedWeight = looseWeight > 0;
   const text = loosedWeight ? "loose" : "gain";

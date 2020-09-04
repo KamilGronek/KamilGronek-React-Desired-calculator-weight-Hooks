@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Main from "./components/Main";
+import AuthenticationContext from "./context/AuthenticationContext";
+
 import "./App.css";
 
 const App = (props) => {
@@ -26,7 +28,6 @@ const App = (props) => {
   const [currentDate, setCurrentDate] = useState(todayISO);
   const [endDate, setEndDate] = useState(tomorrowISO);
   const [numbersOfDays, setNumbersOfDays] = useState("");
-  const [emptyView, setEmptyView] = useState(null);
   const [clickedCountButton, setClickedCountButton] = useState(false);
 
   const handleChangeEvent = (e) => {
@@ -42,41 +43,25 @@ const App = (props) => {
     getLoseandGain();
     getNumberofDays();
     getBMI();
-    // this.setState({
-    //   clickedCountButton: true,
-    // });
     setClickedCountButton(true);
   };
 
   const isClickedCountButton = () => {
-    // return this.state.clickedCountButton;
     return clickedCountButton;
   };
 
   const getLoseandGain = () => {
-    // const { desiredWeight, initialWeight } = this.state;
     const looseWeight = values.initialWeight - values.desiredWeight;
     const gainWeight = values.desiredWeight - values.initialWeight;
 
-    // this.setState({
-    //   looseWeight: looseWeight,
-    //   gainWeight: gainWeight,
-    // });
     setLooseWeight(looseWeight);
     setGainWeight(gainWeight);
   };
 
   const getNumberofDays = () => {
-    // const { currentDate, endDate } = this.state;
     const oneDay = 24 * 60 * 60 * 1000;
     const dateDiffrence = new Date(currentDate) - new Date(endDate);
     const numbersOfDays = Math.round(Math.abs(dateDiffrence / oneDay));
-
-    // this.setState({
-    //   currentDate: currentDate,
-    //   endDate: endDate,
-    //   numbersOfDays: numbersOfDays,
-    // });
 
     setCurrentDate(currentDate);
     setEndDate(endDate);
@@ -84,8 +69,6 @@ const App = (props) => {
   };
 
   const getBMI = () => {
-    // const { initialWeight, desiredWeight, height } = this.state;
-
     const currentBMI = (
       values.initialWeight /
       (values.height / 100) ** 2
@@ -96,18 +79,11 @@ const App = (props) => {
       (values.height / 100) ** 2
     ).toFixed(1);
 
-    // this.setState({
-    //   currentBMI: currentBMI,
-    //   desiredBMI: desiredBMI,
-    // });
-
     setCurrentBMI(currentBMI);
     setDesiredBMI(desiredBMI);
   };
 
   const getCurrentBmiText = () => {
-    // const { currentBMI } = this.state;
-
     if (currentBMI <= 0) {
       return "";
     } else if (currentBMI < "15") {
@@ -130,8 +106,6 @@ const App = (props) => {
   };
 
   const getDesiredBmiText = () => {
-    // const { desiredBMI } = this.state;
-
     if (desiredBMI <= 0) {
       return "";
     } else if (desiredBMI < "15") {
@@ -156,23 +130,28 @@ const App = (props) => {
   return (
     <div className="App">
       <header className="header">Desired web calculator</header>
-      <Main
-        handleCountButton={handleCountButton}
-        handleChangeEvent={handleChangeEvent}
-        initialWeight={values.initialWeight}
-        desiredWeight={values.desiredWeight}
-        height={values.height}
-        looseWeight={looseWeight}
-        gainWeight={gainWeight}
-        currentBMI={currentBMI}
-        desiredBMI={desiredBMI}
-        currentDate={currentDate}
-        endDate={endDate}
-        numbersOfDays={numbersOfDays}
-        getCurrentBmiText={getCurrentBmiText}
-        getDesiredBmiText={getDesiredBmiText}
-        isClickedCountButton={isClickedCountButton}
-      />
+      <AuthenticationContext.Provider
+        value={{
+          looseWeight,
+          gainWeight,
+          currentBMI,
+          desiredBMI,
+          numbersOfDays,
+          isClickedCountButton,
+        }}
+      >
+        <Main
+          handleCountButton={handleCountButton}
+          handleChangeEvent={handleChangeEvent}
+          initialWeight={values.initialWeight}
+          desiredWeight={values.desiredWeight}
+          height={values.height}
+          currentDate={currentDate}
+          endDate={endDate}
+          getCurrentBmiText={getCurrentBmiText}
+          getDesiredBmiText={getDesiredBmiText}
+        />
+      </AuthenticationContext.Provider>
     </div>
   );
 };
